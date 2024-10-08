@@ -15,6 +15,8 @@ import (
 func main() {
 	mux := http.NewServeMux()
 	mux.Handle("POST /validate", api.ValidationHandler())
+	mux.Handle("GET /docs", api.SwaggerUIHandler())
+	mux.Handle("GET /openapi.json", api.OpenAPIHandler())
 
 	httpSrv := &http.Server{
 		Addr:    ":8000",

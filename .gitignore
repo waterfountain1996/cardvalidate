@@ -21,5 +21,7 @@
 
 !issuer/valid-cards.csv
 
+!api/openapi.json
+
 # ...even if they are in subdirectories
 !*/

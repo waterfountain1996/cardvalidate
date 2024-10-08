@@ -1,0 +1,124 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Credit Card Validation API",
+    "description": "A simple API to validate credit card details.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/validate": {
+      "post": {
+        "summary": "Validate credit card details",
+        "description": "Validates the credit card number and expiration date.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string",
+                    "description": "The credit card number.",
+                    "example": "4111111111111111"
+                  },
+                  "exp_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The expiration date in MM/YYYY format.",
+                    "example": "08/2028"
+                  }
+                },
+                "required": ["number", "exp_date"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Credit card details are valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "Whether the credit card details are valid.",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "Whether the credit card details are valid.",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "description": "Error code for general error.",
+                          "example": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "description": "Error message explaining the validation failure.",
+                          "example": "Invalid JSON format."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error (e.g., invalid credit card details).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "Whether the credit card details are valid.",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 1,
+                          "enum": [0, 1, 2, 3, 4, 5],
+                          "description": "Error codes: 0 - General Error, 1 - Malformed Number, 2 - Unknown Issuer, 3 - Invalid Account Number, 4 - Malformed Date, 5 - Card Expired"
+                        },
+                        "message": {
+                          "type": "string",
+                          "description": "Error message explaining the application failure.",
+                          "example": "Invalid credit card number or expiration date."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
