@@ -19,6 +19,8 @@
 
 !Makefile
 
+!Dockerfile
+
 !issuer/valid-cards.csv
 
 !api/openapi.json
